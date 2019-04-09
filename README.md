@@ -39,7 +39,7 @@ reduce --output owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.owl
 5. Convert the relaxed version of the ontology into turtle:
 ```
 java -jar -Xmx8g ~/repos/robot/bin/robot.jar \
-convert owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.owl \
+convert --input owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.owl \
 --output owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.ttl
 ```
 
