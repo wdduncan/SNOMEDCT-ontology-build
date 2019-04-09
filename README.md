@@ -11,6 +11,8 @@ The commands used to convert the RF2 files to owl are in snomedct_rf2_to_owl_int
 
 The commands used to build the reasoned, relaxed, turtle versions of the ontology are in snomedct_intl_reasoned_elk.sh and snomedct_us_reasoned_elk.sh.
 
+**Note:** These shell scripts take a while to run.
+
 Here is an outline of the overall build process:
 1. Use the SNOMED OWL toolkit to build the SNOMED OWL file from the RF2 release, e.g.:
 ```
@@ -24,22 +26,16 @@ java -jar -Xmx8g ~/repos/robot/bin/robot.jar reason \
 --input owl_build/SnomedCT_InternationalRF2_PRODUCTION_20190131T120000Z.owl
 --output owl_build/snomedct_intl_reasoned_elk_2019-01-13.owl
 ```
-3. Convert the reasoned ontology to turtle. This is helpful for viewing the source and loading the ontology into a triplestore:
+3. Use OBO robot toot to "relax" (see http://robot.obolibrary.org/relax) the ontology:
+```
+java -jar -Xmx8g ~/repos/robot/bin/robot.jar \
+relax --input owl_build/snomedct_intl_reasoned_elk_2019-01-13.owl \
+--output owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.owl
+```
+
+Sometimes it is useful to convert an ontology into turtle syntax. Using robot, this can be accomplished using the 'conver' option:
 ```
 java -jar -Xmx8g ~/repos/robot/bin/robot.jar \
 convert --input owl_build/snomedct_intl_reasoned_elk_2019-01-13.owl \
 --output owl_build/snomedct_intl_reasoned_elk_2019-01-13.ttl
 ```
-4. Use OBO robot toot to "relax" (see http://robot.obolibrary.org/relax) the ontology:
-```
-java -jar -Xmx8g ~/repos/robot/bin/robot.jar \
-relax --input owl_build/snomedct_intl_reasoned_elk_2019-01-13.owl \
-reduce --output owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.owl
-```
-5. Convert the relaxed version of the ontology into turtle:
-```
-java -jar -Xmx8g ~/repos/robot/bin/robot.jar \
-convert --input owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.owl \
---output owl_build/snomedct_intl_reasoned_elk_relaxed_2019-01-13.ttl
-```
-
